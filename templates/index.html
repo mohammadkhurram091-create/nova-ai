@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#09090f">
+    <meta name="description" content="Nova AI — your private local AI assistant.">
+    <title>Nova AI — Your Local Assistant</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+            <div class="brand">
+                <div class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 3L24.5 15.5L37 20L24.5 24.5L20 37L15.5 24.5L3 20L15.5 15.5L20 3Z" fill="currentColor"/>
+                        <circle cx="20" cy="20" r="4" fill="#0B0A12"/>
+                    </svg>
+                </div>
+                <div class="brand-copy">
+                    <div class="brand-name">nova<span>ai</span></div>
+                    <div class="brand-caption">YOUR PRIVATE AI</div>
+                </div>
+                <button class="icon-button sidebar-close" id="close-sidebar" type="button" aria-label="Close sidebar">✕</button>
+            </div>
+
+            <button class="new-chat-button" id="new-chat" type="button">
+                <span class="plus-icon" aria-hidden="true">＋</span>
+                <span>New conversation</span>
+                <kbd class="shortcut">Ctrl K</kbd>
+            </button>
+
+            <div class="sidebar-label">WORKSPACE</div>
+            <div class="workspace-card">
+                <div class="workspace-icon" aria-hidden="true">✳</div>
+                <div class="workspace-info">
+                    <strong>Personal workspace</strong>
+                    <span>Local environment</span>
+                </div>
+                <span class="status-dot" aria-label="Status indicator"></span>
+            </div>
+
+            <div class="sidebar-label history-label">RECENT CHATS</div>
+            <div class="history-list" id="history-list" aria-label="Recent conversations">
+                <div class="empty-history">Your conversations will appear here.</div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="model-card">
+                    <div class="model-avatar" aria-hidden="true">✦</div>
+                    <div class="model-info">
+                        <strong>Llama 3.2 · 1B</strong>
+                        <span><span class="status-dot"></span> Local model</span>
+                    </div>
+                    <span class="model-lock" title="Local model" aria-label="Local model">⌘</span>
+                </div>
+                <div class="privacy-note">
+                    <span aria-hidden="true">◈</span>
+                    <span>Your chats stay on your machine, except for any external services you choose to use.</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="icon-button menu-button" id="open-sidebar" type="button" aria-label="Open sidebar">☰</button>
+                    <div class="breadcrumb">
+                        <span class="breadcrumb-muted">Workspace</span>
+                        <span class="breadcrumb-separator">/</span>
+                        <strong>Assistant</strong>
+                    </div>
+                </div>
+               <div class="topbar-right">
+    <button
+        class="icon-button theme-toggle"
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch to dark theme"
+        title="Switch theme"
+    >
+        <span class="theme-icon theme-icon-light" aria-hidden="true">☀</span>
+        <span class="theme-icon theme-icon-dark" aria-hidden="true">☾</span>
+    </button>
+
+    <div class="connection-status">
+        <span class="status-dot"></span>
+        <span>Local environment</span>
+    </div>
+
+    <div class="avatar" aria-label="Your profile">K</div>
+</div>
+            </header>
+
+            <section class="chat-area" id="chat-area" aria-label="Conversation">
+                <div class="welcome-screen" id="welcome-screen">
+                    <div class="welcome-orb" aria-hidden="true">
+                        <div class="orb-ring ring-one"></div>
+                        <div class="orb-ring ring-two"></div>
+                        <div class="orb-core">
+                            <svg viewBox="0 0 40 40" fill="none">
+                                <path d="M20 3L24.5 15.5L37 20L24.5 24.5L20 37L15.5 24.5L3 20L15.5 15.5L20 3Z" fill="currentColor"/>
+                                <circle cx="20" cy="20" r="4" fill="#0B0A12"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-line"></span>
+                        YOUR PERSONAL AI SPACE
+                        <span class="eyebrow-line"></span>
+                    </div>
+
+                    <h1>Ideas start<br><span>somewhere.</span></h1>
+
+                    <p class="welcome-description">
+                        A space to think out loud, explore ideas and get things done — powered by your own local AI.
+                    </p>
+
+                    <div class="prompt-heading">
+                        <span>TRY ASKING NOVA</span>
+                        <span class="prompt-heading-note">Choose a starting point</span>
+                    </div>
+
+                    <div class="prompt-grid">
+                        <button class="prompt-card" type="button" data-prompt="Explain Python programming to me like I am a beginner.">
+                            <span class="prompt-icon purple" aria-hidden="true">⌘</span>
+                            <span class="prompt-title">Learn something</span>
+                            <span class="prompt-description">Break down a complex topic</span>
+                            <span class="prompt-arrow" aria-hidden="true">↗</span>
+                        </button>
+
+                        <button class="prompt-card" type="button" data-prompt="Give me 5 creative project ideas I can build with Python.">
+                            <span class="prompt-icon blue" aria-hidden="true">✳</span>
+                            <span class="prompt-title">Brainstorm ideas</span>
+                            <span class="prompt-description">Turn a thought into a plan</span>
+                            <span class="prompt-arrow" aria-hidden="true">↗</span>
+                        </button>
+
+                        <button class="prompt-card" type="button" data-prompt="Help me debug my Python code. Explain the likely causes and ask me to share my code.">
+                            <span class="prompt-icon pink" aria-hidden="true">{ }</span>
+                            <span class="prompt-title">Write better code</span>
+                            <span class="prompt-description">Debug, improve and build</span>
+                            <span class="prompt-arrow" aria-hidden="true">↗</span>
+                        </button>
+
+                        <button class="prompt-card" type="button" data-prompt="Help me make a practical plan for learning a new skill in 30 days.">
+                            <span class="prompt-icon amber" aria-hidden="true">◷</span>
+                            <span class="prompt-title">Make a plan</span>
+                            <span class="prompt-description">Small steps, real progress</span>
+                            <span class="prompt-arrow" aria-hidden="true">↗</span>
+                        </button>
+                    </div>
+
+                    <div class="welcome-footnote">
+                        <span class="welcome-footnote-dot"></span>
+                        Private by design
+                        <span class="footnote-divider">·</span>
+                        Runs on your machine
+                    </div>
+                </div>
+
+                <div class="messages" id="messages" aria-live="polite" aria-relevant="additions"></div>
+            </section>
+
+            <footer class="composer-area">
+                <form class="composer" id="chat-form">
+                    <label class="sr-only" for="message-input">Your message to Nova</label>
+                    <textarea id="message-input" rows="1" placeholder="Message Nova..." aria-label="Your message" required></textarea>
+
+                    <div class="composer-toolbar">
+                        <div class="composer-hint">
+                            <span class="sparkle-small" aria-hidden="true">✦</span>
+                            Powered by local Ollama
+                        </div>
+
+                        <div class="composer-actions">
+                            <span class="enter-hint">Enter to send <span>·</span> Shift + Enter for new line</span>
+                            <button class="send-button" id="send-button" type="submit" aria-label="Send message">
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 19V5M6 11L12 5L18 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <p class="footer-note">Nova can make mistakes. Verify important information.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
